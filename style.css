@@ -18,6 +18,8 @@
     --sidebar-width: 250px;
     --player-height: 90px;
     --bottom-nav-height: 70px;
+    --disabled-bg: #404040;
+    --disabled-text: #808080;
 }
 
 /* Reset & Base Styles */
@@ -109,6 +111,80 @@ body {
     font-size: 24px;
     font-weight: 700;
     letter-spacing: -0.5px;
+}
+
+/* ============================================
+   PROFILE SECTION
+   ============================================ */
+.profile-section {
+    padding: 0 24px 16px;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--bg-card);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-avatar svg {
+    width: 24px;
+    height: 24px;
+    color: var(--text-secondary);
+}
+
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.profile-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.profile-btn {
+    width: 100%;
+    padding: 10px 16px;
+    background-color: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 500px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.profile-btn:hover {
+    background-color: var(--bg-card-hover);
+    border-color: var(--text-secondary);
+    transform: scale(1.02);
 }
 
 /* Sidebar Navigation */
@@ -203,7 +279,7 @@ body {
 .main-header {
     position: relative;
     padding: 32px;
-    min-height: 300px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -227,6 +303,7 @@ body {
     text-align: center;
 }
 
+/* Login Button - Disabled State */
 .login-btn {
     display: inline-flex;
     align-items: center;
@@ -249,9 +326,93 @@ body {
     transform: scale(1.04);
 }
 
+/* Disabled Button Styles */
+.login-btn.disabled {
+    background-color: var(--disabled-bg);
+    color: var(--disabled-text);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.login-btn.disabled:hover {
+    transform: none;
+    background-color: var(--disabled-bg);
+}
+
 .spotify-icon {
     width: 24px;
     height: 24px;
+}
+
+/* ============================================
+   SEARCH SECTION
+   ============================================ */
+.search-section {
+    padding: 24px 32px;
+}
+
+.search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    color: var(--text-secondary);
+    pointer-events: none;
+}
+
+.search-input {
+    width: 100%;
+    padding: 16px 48px 16px 52px;
+    background-color: var(--bg-card);
+    border: 2px solid transparent;
+    border-radius: 500px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.search-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--text-primary);
+    background-color: var(--bg-card-hover);
+}
+
+.search-clear {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.search-clear:hover {
+    color: var(--text-primary);
+}
+
+.search-clear.visible {
+    display: flex;
 }
 
 /* Content Sections */
@@ -554,6 +715,15 @@ body {
     background-color: var(--text-primary);
 }
 
+/* Download Button */
+.control-btn.download {
+    color: var(--text-secondary);
+}
+
+.control-btn.download:hover {
+    color: var(--accent);
+}
+
 /* Progress Bar */
 .progress-container {
     display: flex;
@@ -642,6 +812,139 @@ body {
 }
 
 /* ============================================
+   LOGIN MODAL STYLES
+   ============================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal {
+    background-color: var(--bg-card);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 450px;
+    padding: 24px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-overlay.active .modal {
+    transform: scale(1);
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.modal-header h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.modal-close svg {
+    width: 24px;
+    height: 24px;
+}
+
+.modal-close:hover {
+    color: var(--text-primary);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input {
+    padding: 14px 16px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--text-primary);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.modal-submit {
+    width: 100%;
+    padding: 16px;
+    background-color: var(--accent);
+    color: var(--bg-secondary);
+    border: none;
+    border-radius: 500px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 8px;
+}
+
+.modal-submit:hover {
+    background-color: var(--accent-hover);
+    transform: scale(1.02);
+}
+
+/* ============================================
    RESPONSIVE STYLES
    ============================================ */
 
@@ -689,13 +992,23 @@ body {
     
     /* Adjust Header */
     .main-header {
-        min-height: 200px;
+        min-height: 150px;
         padding: 24px;
     }
     
     .login-btn {
         padding: 12px 24px;
         font-size: 12px;
+    }
+    
+    /* Adjust Search Section */
+    .search-section {
+        padding: 16px;
+    }
+    
+    .search-input {
+        padding: 14px 44px 14px 48px;
+        font-size: 14px;
     }
     
     /* Adjust Content Section */
@@ -744,107 +1057,4 @@ body {
         height: 44px;
     }
     
-    .song-info {
-        max-width: 120px;
-    }
-    
-    .song-title {
-        font-size: 13px;
-    }
-    
-    .song-artist {
-        font-size: 11px;
-    }
-    
-    .like-btn {
-        display: none;
-    }
-    
-    /* Center - Simplified Controls */
-    .player-center {
-        flex: 0;
-    }
-    
-    .controls {
-        gap: 12px;
-    }
-    
-    .control-btn.shuffle,
-    .control-btn.repeat {
-        display: none;
-    }
-    
-    .control-btn.prev,
-    .control-btn.next {
-        display: none;
-    }
-    
-    .control-btn.play-pause {
-        width: 48px;
-        height: 48px;
-    }
-    
-    .progress-container {
-        display: none;
-    }
-    
-    /* Hide Volume on Mobile */
-    .player-right {
-        display: none;
-    }
-}
-
-/* Small Mobile Styles */
-@media (max-width: 480px) {
-    .cards-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
-    }
-    
-    .card {
-        padding: 8px;
-    }
-    
-    .play-overlay {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .play-overlay svg {
-        width: 18px;
-        height: 18px;
-    }
-    
-    .song-info {
-        max-width: 100px;
-    }
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-.sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-}
-
-/* Focus Styles for Accessibility */
-a:focus-visible,
-button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-}
-
-/* Selection Color */
-::selection {
-    background-color: var(--accent);
-    color: var(--bg-secondary);
-  }
-      
+    .song-inf
